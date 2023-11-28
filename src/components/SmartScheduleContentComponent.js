@@ -7,25 +7,24 @@ export const SmartScheduleContentComponent = ({ content }) => {
 	// 	index == 0 ? item : "At" + item
 	// );
 	console.log(newContent);
-	newContent = newContent.map((stage, index) =>
-		index === 0 ? (
-			<b>{stage}</b>
-		) : (
-			// <Typography sx={{ m: 2 }}>{stage}</Typography>
-			<p>{stage}</p>
-		)
-	);
+	newContent = newContent.map((stage, index) => <p>{stage}</p>);
 
 	return (
-		<Paper elevation={1} sx={{ p: 2 }}>
-			<Typography sx={{ mb: 2, color: "text.secondary" }} component="pre">
-				{newContent.map((stage, index) => (
-					<React.Fragment key={index}>
-						{stage}
-						{index < newContent.length - 1 && <Divider />}
-					</React.Fragment>
-				))}
-			</Typography>
-		</Paper>
+		<Box>
+			<Typography variant="h4">Smart Schedule</Typography>
+			<Paper elevation={1} sx={{ p: 2 }}>
+				<Typography
+					sx={{ mb: 2, color: "text.secondary" }}
+					component="pre"
+				>
+					{newContent.map((stage, index) => (
+						<React.Fragment key={index}>
+							{stage}
+							{index < newContent.length - 1 && <Divider />}
+						</React.Fragment>
+					))}
+				</Typography>
+			</Paper>
+		</Box>
 	);
 };

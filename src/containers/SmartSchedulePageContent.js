@@ -53,7 +53,7 @@ export const SmartSchedulePageContent = () => {
 			let dish;
 			await new Promise((resolve) => {
 				setLogContent(
-					"Smart Schedule\n\n----------The following schedule has been generated using the Simulated Annealing Algorithm in a bid to minimize the overall cooling time"
+					"The following schedule has been generated using the Simulated Annealing Algorithm in a bid to minimize the overall cooling time"
 				);
 				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
 			});
@@ -135,17 +135,32 @@ export const SmartSchedulePageContent = () => {
 					await new Promise((resolve) => {
 						setLogContent((prevLogContent) => {
 							let newLogContent = prevLogContent;
-							newLogContent +=
-								"----------At the " +
-								previousCookingTime +
-								"th minute:\n" +
-								"\n\tCook " +
-								dish.dishName +
-								" on stove " +
-								dish.stoveCookedOn +
-								" (" +
-								dish.cookingTime +
-								" minutes)";
+							let matchText = new RegExp(
+								`At the ${previousCookingTime}th minute`
+							);
+
+							if (matchText.test(newLogContent)) {
+								newLogContent +=
+									"\n\tCook " +
+									dish.dishName +
+									" on stove " +
+									dish.stoveCookedOn +
+									" (" +
+									dish.cookingTime +
+									" minutes)";
+							} else {
+								newLogContent +=
+									"----------At the " +
+									previousCookingTime +
+									"th minute:\n" +
+									"\n\tCook " +
+									dish.dishName +
+									" on stove " +
+									dish.stoveCookedOn +
+									" (" +
+									dish.cookingTime +
+									" minutes)";
+							}
 							return newLogContent;
 						});
 						setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
@@ -179,20 +194,37 @@ export const SmartSchedulePageContent = () => {
 					await new Promise((resolve) => {
 						setLogContent((prevLogContent) => {
 							let newLogContent = prevLogContent;
-							newLogContent +=
-								"----------At the " +
-								previousCookingTime +
-								"th minute:\n" +
-								"\n\tWash a pan (" +
-								cleaningTime +
-								" minutes)" +
-								"\n\tCook " +
-								dish.dishName +
-								" on stove " +
-								dish.stoveCookedOn +
-								" (" +
-								dish.cookingTime +
-								" minutes)";
+							let matchText = new RegExp(
+								`At the ${previousCookingTime}th minute`
+							);
+							if (matchText.test(newLogContent)) {
+								newLogContent +=
+									"\n\tWash a pan (" +
+									cleaningTime +
+									" minutes)" +
+									"\n\tCook " +
+									dish.dishName +
+									" on stove " +
+									dish.stoveCookedOn +
+									" (" +
+									dish.cookingTime +
+									" minutes)";
+							} else {
+								newLogContent +=
+									"----------At the " +
+									previousCookingTime +
+									"th minute:\n" +
+									"\n\tWash a pan (" +
+									cleaningTime +
+									" minutes)" +
+									"\n\tCook " +
+									dish.dishName +
+									" on stove " +
+									dish.stoveCookedOn +
+									" (" +
+									dish.cookingTime +
+									" minutes)";
+							}
 							return newLogContent;
 						});
 						setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
