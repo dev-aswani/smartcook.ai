@@ -8,7 +8,7 @@ import { Box, Button, MenuPaper, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { flushSync } from "react-dom";
 
-export const ChartPageContent = () => {
+export const ChartPageContent = ({ success, setSuccess }) => {
 	const {
 		temperature,
 		coolingTime,
@@ -439,6 +439,9 @@ export const ChartPageContent = () => {
 		// });
 		console.log("final data points", dataPoints);
 		// setData(dataPoints);
+		setSuccess(
+			"Simulated annealing is now complete, and the smart schedule has been made available for your perusal."
+		);
 		setOptimizedState(localCurrentState);
 	};
 

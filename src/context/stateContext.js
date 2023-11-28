@@ -4,7 +4,7 @@ export const dishesContext = createContext();
 export const Provider = ({ children }) => {
 	const [dishes, setDishes] = useState(dishesData);
 	// const [dishes, setDishes] = useState([]);
-	const [numberOfPans, setNumberOfPans] = useState(7);
+	const [numberOfPans, setNumberOfPans] = useState(5);
 	const [numberOfStoves, setNumberOfStoves] = useState(10);
 	const [cleaningTime, setCleaningTime] = useState(5);
 	const [temperature, setTemperature] = useState(null);

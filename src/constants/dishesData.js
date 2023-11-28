@@ -1,3 +1,4 @@
+//there is a problem if the dishes are repeated in the printing of the schedule or even if there are 2 dishes with the same cooking time
 export const dishesData = [
 	{
 		dishName: "Caramel Pie",

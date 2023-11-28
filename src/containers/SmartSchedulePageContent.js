@@ -53,7 +53,7 @@ export const SmartSchedulePageContent = () => {
 			let dish;
 			await new Promise((resolve) => {
 				setLogContent(
-					"The following schedule has been generated using the Simulated Annealing Algorithm in a bid to minimize the overall cooling time"
+					"Smart Schedule\n\n----------The following schedule has been generated using the Simulated Annealing Algorithm in a bid to minimize the overall cooling time"
 				);
 				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
 			});
@@ -296,8 +296,11 @@ export const SmartSchedulePageContent = () => {
 				setLogContent((prevLogContent) => {
 					let newLogContent =
 						prevLogContent +
-						"----------Minimum Cooling Time is " +
+						"----------Total Minimum Cooling Time for all dishes is " +
 						coolingTime +
+						" minutes" +
+						"\nAverage Minimum Cooling Time per dish is " +
+						coolingTime / optimizedState?.length +
 						" minutes";
 					return newLogContent;
 				});

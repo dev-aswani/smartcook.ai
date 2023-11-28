@@ -102,7 +102,7 @@ export const DetailsPageContent = ({ success, setSuccess }) => {
 							} else {
 								setNumberOfPansError(null);
 							}
-							setCurrentNumberOfPans(parseInt(value));
+							setCurrentNumberOfPans(parseInt(value) || "");
 						}}
 						error={numberOfPansError ? true : false}
 						helperText={numberOfPansError}
@@ -133,7 +133,7 @@ export const DetailsPageContent = ({ success, setSuccess }) => {
 							} else {
 								setNumberOfStovesError(null);
 							}
-							setCurrentNumberOfStoves(parseInt(value));
+							setCurrentNumberOfStoves(parseInt(value) || "");
 						}}
 						error={numberOfStovesError ? true : false}
 						helperText={numberOfStovesError}
@@ -157,7 +157,7 @@ export const DetailsPageContent = ({ success, setSuccess }) => {
 							} else {
 								setCleaningTimeError(null);
 							}
-							setCurrentCleaningTime(parseInt(value));
+							setCurrentCleaningTime(parseInt(value) || "");
 						}}
 						margin="dense"
 						id="cleaningTime"

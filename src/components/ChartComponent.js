@@ -56,11 +56,15 @@ export const ChartComponent = ({ data, progress }) => {
 		height: 400,
 		axisX: {
 			labelFontColor: theme.palette.text.secondary,
+			title: "Iteration",
+			titleFontColor: theme.palette.primary.light,
 		},
 		axisY: {
 			gridThickness: 0, // Set gridThickness to 0 to hide horizontal grid lines
 
 			labelFontColor: theme.palette.text.secondary,
+			title: "Cooling Time (in minutes)",
+			titleFontColor: theme.palette.primary.light,
 		},
 	};
 

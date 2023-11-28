@@ -34,24 +34,49 @@ export const Navbar = () => {
 						<Button
 							color="inherit"
 							onClick={() => handleClick("dishes")}
+							sx={{
+								backgroundColor:
+									currentPage === "/dishes" ||
+									currentPage === "/"
+										? theme.palette.primary.light
+										: "default",
+							}}
 						>
 							Dishes
 						</Button>
 						<Button
 							color="inherit"
 							onClick={() => handleClick("logistics")}
+							sx={{
+								backgroundColor:
+									currentPage === "/logistics"
+										? theme.palette.primary.light
+										: "default",
+							}}
 						>
 							Logistics
 						</Button>
 						<Button
 							color="inherit"
 							onClick={() => handleClick("simulated-annealing")}
+							sx={{
+								backgroundColor:
+									currentPage === "/simulated-annealing"
+										? theme.palette.primary.light
+										: "default",
+							}}
 						>
 							Simulated Annealing
 						</Button>
 						<Button
 							color="inherit"
 							onClick={() => handleClick("smart-schedule")}
+							sx={{
+								backgroundColor:
+									currentPage === "/smart-schedule"
+										? theme.palette.primary.light
+										: "default",
+							}}
 						>
 							Smart Schedule
 						</Button>
