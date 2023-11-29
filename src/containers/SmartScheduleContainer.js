@@ -44,7 +44,7 @@ export const SmartScheduleContainer = () => {
 		if (redirect === "") {
 			logger(optimizedState);
 		}
-	}, [redirect]);
+	}, [redirect, optimizedState]);
 
 	const [logContent, setLogContent] = useState("");
 
