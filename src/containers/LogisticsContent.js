@@ -1,3 +1,5 @@
+//This container is used to read and update the user input pertaining to logistical details such as the number of pans, the number of stoves, and the cleaning time, and also performs the necessary validation while at it
+
 import React, { useState, useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -6,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { theme } from "../utils";
 import { dishesContext } from "../context/stateContext";
-import { SuccessAlert } from "../components";
 export const LogisticsContent = ({ success, setSuccess }) => {
 	const {
 		numberOfPans,
@@ -16,15 +17,23 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 		cleaningTime,
 		setCleaningTime,
 	} = useContext(dishesContext);
+
 	const [cleaningTimeError, setCleaningTimeError] = useState(null);
+
 	const [numberOfPansError, setNumberOfPansError] = useState(null);
+
 	const [numberOfStovesError, setNumberOfStovesError] = useState(null);
+
 	const [currentNumberOfPans, setCurrentNumberOfPans] =
 		useState(numberOfPans);
+
 	const [currentNumberOfStoves, setCurrentNumberOfStoves] =
 		useState(numberOfStoves);
+
 	const [currentCleaningTime, setCurrentCleaningTime] =
 		useState(cleaningTime);
+
+	//This function is used to save the data inputted by the user, by updating the state variables accessed from the stateContext.
 	const handleSaveClick = () => {
 		setNumberOfPans(currentNumberOfPans);
 		setNumberOfStoves(currentNumberOfStoves);
@@ -35,12 +44,6 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 	return (
 		<Box
 			sx={{
-				// position: "absolute",
-				// top: 0,
-				// left: 0,
-				// right: 0,
-				// bottom: 0,
-				// zIndex: -1,
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
@@ -85,6 +88,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 						fullWidth
 						variant="standard"
 						sx={{ mb: 1, color: "text.secondary" }}
+						//This function is used to perform the necessary validation when reading user input for the number of pans. It ensures that users only input positive integral values for the number of pans, and sets the local state variables, emulating the concept of controlled components in React.
 						onChange={(event) => {
 							let value = event.target.value;
 							if (currentNumberOfPans && value === "") {
@@ -116,6 +120,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 						fullWidth
 						variant="standard"
 						sx={{ mb: 1, color: "text.secondary" }}
+						//This function is used to perform the necessary validation when reading user input for the number of stoves. It ensures that users only input positive integral values for the number of stoves, and sets the local state variables, emulating the concept of controlled components in React.
 						onChange={(event) => {
 							let value = event.target.value;
 							if (currentNumberOfStoves && value === "") {
@@ -140,6 +145,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 					/>
 					<TextField
 						value={currentCleaningTime ?? ""}
+						//This function is used to perform the necessary validation when reading user input for the cleaning time of a pan. It ensures that users only input positive integral values for the cleaning time of a pan, and sets the local state variables, emulating the concept of controlled components in React.
 						onChange={(event) => {
 							let value = event.target.value;
 							if (currentCleaningTime && value === "") {

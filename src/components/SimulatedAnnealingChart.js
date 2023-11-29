@@ -1,45 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+//This component accepts props fom the SimulatedAnnealingContainer, including data points corresponding to the simulated annealing algorithm and the percentage completion at any point within the algorithms execution time and dynamically plots the graph and displays the progress bar. It also imports the necessary components to display the progress bar
+
+import React from "react";
 import CanvasJSReact from "@canvasjs/react-charts";
-import { Box, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { ProgressBar } from "./ProgressBar";
 import { theme } from "../utils";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export const SimulatedAnnealingChart = ({ data, progress }) => {
-	const [dps, setDps] = useState([
-		{ x: 1, y: 10 },
-		{ x: 2, y: 13 },
-		{ x: 3, y: 18 },
-		{ x: 4, y: 20 },
-		{ x: 5, y: 17 },
-		{ x: 6, y: 10 },
-		{ x: 7, y: 13 },
-		{ x: 8, y: 18 },
-		{ x: 9, y: 20 },
-		{ x: 10, y: 17 },
-	]);
-
-	// const xVal = useRef(dps.length + 1);
-	// const yVal = useRef(15);
-
-	// const updateInterval = 1000;
-
-	// useEffect(() => {
-	// 	const intervalId = setInterval(updateChart, updateInterval);
-
-	// 	return () => clearInterval(intervalId);
-	// }, [dps]);
-
-	// const updateChart = () => {
-	// 	yVal.current = yVal.current + Math.round(5 + Math.random() * (-5 - 5));
-	// 	setDps((prevDps) => [...prevDps, { x: xVal.current, y: yVal.current }]);
-	// 	xVal.current++;
-
-	// 	// if (dps.length > 10) {
-	// 	// 	setDps((prevDps) => prevDps.slice(1));
-	// 	// }
-	// };
-
 	const options = {
 		// title: {
 		// 	text: "Dynamic Line Chart",
@@ -52,7 +20,7 @@ export const SimulatedAnnealingChart = ({ data, progress }) => {
 				lineColor: theme.palette.primary.main,
 			},
 		],
-		width: 700, // Set the width explicitly
+		width: 700,
 		height: 400,
 		axisX: {
 			labelFontColor: theme.palette.text.secondary,
@@ -60,8 +28,7 @@ export const SimulatedAnnealingChart = ({ data, progress }) => {
 			titleFontColor: theme.palette.primary.light,
 		},
 		axisY: {
-			gridThickness: 0, // Set gridThickness to 0 to hide horizontal grid lines
-
+			gridThickness: 0,
 			labelFontColor: theme.palette.text.secondary,
 			title: "Cooling Time (in minutes)",
 			titleFontColor: theme.palette.primary.light,

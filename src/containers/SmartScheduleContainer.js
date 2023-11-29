@@ -1,3 +1,5 @@
+//This container is used to generate the smart schedule by accessing the optimized state from the stateContext and subsequently determining the schedule and computing the cumulative and average cooling times and also imports the necessary components required to accomplish the aforementioned tasks.
+
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
 import { useNavigate } from "react-router-dom";
@@ -5,19 +7,16 @@ import { SmartScheduleContent } from "../components";
 import { Box, Button, Paper, Typography } from "@mui/material";
 export const SmartScheduleContainer = () => {
 	const {
-		temperature,
-		coolingTime,
 		dishes,
-		setDishes,
-		setTemperature,
 		numberOfPans,
 		numberOfStoves,
 		cleaningTime,
-		setCoolingTime,
 		optimizedState,
 	} = useContext(dishesContext);
 	const navigate = useNavigate();
 	const [redirect, setRedirect] = useState("");
+
+	//This function checks if the user has added necessary details pertaining to dishes and logistics, and performed simulated annealing
 	function validation() {
 		if (!dishes || dishes.length == 0) {
 			setRedirect("You haven't added any dishes, please add some dishes");
@@ -33,16 +32,23 @@ export const SmartScheduleContainer = () => {
 			setRedirect("");
 		}
 	}
+
+	//This function allows facilitates user friendly navigation to appropriate sections in case the user hasnt performed all the prerequisites needed to generate the smart schedule
 	const handleClick = (path) => {
 		navigate(`/${path}`);
 	};
+
+	//This essentially invokes the validation function and generates the schedule if the user has performed all the prerequisites needed to generate the smart schedule and displays it in a user friendly format
 	useEffect(() => {
 		validation();
 		if (redirect === "") {
 			logger(optimizedState);
 		}
 	}, [redirect]);
+
 	const [logContent, setLogContent] = useState("");
+
+	//This function basically computes the total and average cooling time for the optimized state generated after performing Simulated Annealing
 	const logger = async (state) => {
 		if (state && state.length != 0) {
 			let counter = 0;
@@ -67,7 +73,6 @@ export const SmartScheduleContainer = () => {
 			});
 			for (counter; counter < newNumberOfStoves; counter++) {
 				dish = state[counter];
-				// console.log("dish", dish);
 
 				dish.stoveCookedOn = counter + 1;
 				timesAndDishes.push({ cookedAt: dish.cookingTime, dish: dish });
@@ -110,19 +115,12 @@ export const SmartScheduleContainer = () => {
 				timesAndDishes?.splice(0, 1);
 				let firstPossibleCleaningTimeDuration =
 					state[counter]?.cookingTime || 0;
-				// console.log("previous cooking time", previousCookingTime);
-				// console.log("previous stove cooked on", previousStoveCookedOn);
-				// console.log(
-				// 	"first possible cleaning time duration",
-				// 	firstPossibleCleaningTimeDuration
-				// );
 				let numberToWash;
 				let maxCleaningTime;
 				let secondPossibleCleaningTimeDuration;
 				if (numberOfWashedPans !== 0) {
 					dish = state && state[counter];
 					dish.stoveCookedOn = previousStoveCookedOn;
-					// dish.cookingTime = dish.cookingTime + previousCookingTime;
 					timesAndDishes.push({
 						cookedAt: dish.cookingTime + previousCookingTime,
 						dish: dish,
@@ -338,23 +336,11 @@ export const SmartScheduleContainer = () => {
 				});
 				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
 			});
-			// console.log("times and dishes ", timesAndDishes);
-			// console.log("times and dishes 2", timesAndDishes2);
-			// console.log("cooling time", coolingTime);
-			// console.log("max time", maxTime);
-			// console.log("**********************");
-			// return coolingTime;
 		}
 	};
 	return (
 		<Box
 			sx={{
-				// position: "absolute",
-				// top: 0,
-				// bottom: 0,
-				// left: 0,
-				// right: 0,
-				// zIndex: -1,
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",

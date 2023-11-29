@@ -1,3 +1,5 @@
+//This component is imported by the HomeContainer, and is used to display the list of dish names and cooking times added by the user in a tabular format. It also handles user requests pertaining to updating and/or deleting dishes by modifying the dishes state accessed from the stateContext
+
 import { useState, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
 import Button from "@mui/material/Button";
@@ -18,12 +20,17 @@ import { Typography } from "@mui/material";
 import { cloneDeep } from "lodash";
 export const DishList = ({ setEditModeIndex, setSuccess }) => {
 	const { dishes, setDishes } = useContext(dishesContext);
+
 	const [open, setOpen] = useState(false);
+
 	const [deleteIndex, setDeleteIndex] = useState(null);
+
+	//This function handles the edits related to a dish by opening a modal, displaying the current details and asking the user to enter the updated details and to confirm the updates
 	const handleEdit = (index) => {
 		setEditModeIndex(index);
 	};
 
+	//This function handles the deletes related to a dish by opening a dialog box asking for user confirmation to delete the selected dish
 	const handleDelete = (index) => {
 		setDeleteIndex(index);
 		setOpen(true);
@@ -34,6 +41,7 @@ export const DishList = ({ setEditModeIndex, setSuccess }) => {
 		setDeleteIndex(null);
 	};
 
+	//This function deletes the dish by modifying the dishes state upon user confirmation
 	const handleDeleteConfirm = () => {
 		const currentDishes = dishes ? cloneDeep(dishes) : [];
 		currentDishes.splice(deleteIndex, 1);

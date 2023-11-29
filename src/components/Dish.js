@@ -1,3 +1,4 @@
+//This component is imported by the Dish List component to model and display a dish and handle the requests related to updates and/or deletes in conjunction with DishInput and DishList
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import TableCell from "@mui/material/TableCell";
@@ -8,23 +9,33 @@ import TableRow from "@mui/material/TableRow";
 
 export const Dish = ({ dish, index, handleEdit, handleDelete }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
+
+	//This handles the user's clicking on the options icon to either edit or delete a dish by displaying those options
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
+
+	//This handles the user's clicking elsewhere after clicking on the options by closing the options popover
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 	};
+
+	//This handles the user's request to edit a dish by setting the index of the dish to be edited in its parent component, DishList,  which in turn sets its parent component's editModeIndex state variable which is passed to DishInput which then opens the associated modal, asking the user to enter the updated details of the dish that he wants to edit
 	const handleEditClick = () => {
 		handleEdit(index);
 		handleMenuClose();
 	};
+
+	//This handles the user's request to delete a dish by setting the index of the dish to be deleted in its parent component, DishList, which then opens a dialog box requesting user confirmation to proceed with the delete operation, upon which the DishList component deletes the dish by modifying the dishes state stored and maintained in the stateContext
 	const handleDeleteClick = () => {
 		handleDelete(index);
 		handleMenuClose();
 	};
+
 	const open = Boolean(anchorEl);
+
 	const id = open ? "simple-popover" : undefined;
-	// console.log(typeof dish.cookingTime);
+
 	return (
 		<TableRow>
 			<TableCell

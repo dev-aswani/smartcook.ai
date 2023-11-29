@@ -1,3 +1,5 @@
+//This file serves as a central module to export components, making them available for import by other files.
+
 export { Dish } from "./Dish";
 export { DishList } from "./DishList";
 export { Navbar } from "./Navbar";

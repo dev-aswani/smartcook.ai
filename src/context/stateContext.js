@@ -1,3 +1,5 @@
+//This is a React Context named stateContext which maintains various state variables and facilitates simultaneous availability across multiple components
+
 import { createContext, useState } from "react";
 import { dishesData } from "../constants";
 export const dishesContext = createContext();

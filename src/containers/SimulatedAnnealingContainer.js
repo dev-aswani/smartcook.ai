@@ -1,46 +1,41 @@
+//This container performs the simulated annealing and is used to generate the graphical reperesentation of the simulated annealing algorithm along with the progress bar that depicts the percentage completion at any point within the algorithm's execution time and also imports the necessary components required to accomplish the aofrementioned tasks.
+
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
-import { Navbar } from "../components";
-import { SimulatedAnnealingChart, ProgressBar } from "../components";
-import { capitalize, cloneDeep, shuffle } from "lodash";
-import { Link } from "react-router-dom";
+import { SimulatedAnnealingChart } from "../components";
+import { cloneDeep, shuffle } from "lodash";
 import { Box, Button, MenuPaper, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { flushSync } from "react-dom";
 
 export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 	const {
-		temperature,
-		coolingTime,
 		dishes,
-		setDishes,
-		setTemperature,
 		numberOfPans,
 		numberOfStoves,
 		cleaningTime,
-		setCoolingTime,
-		optimizedState,
 		setOptimizedState,
 	} = useContext(dishesContext);
+
 	const [progress, setProgress] = useState(0);
-	// const [iteration, setIteration] = useState(1);
+
 	const [data, setData] = useState([]);
+
 	const [currentState, setCurrentState] = useState(() => {
 		let newDishes = dishes ? cloneDeep(dishes) : [];
 		for (let i = 0; i < 10; i++) {
 			newDishes = shuffle(newDishes);
 		}
 		return newDishes;
-	}); //shuffle the array
-	// useEffect(() => console.log(currentState), []);
-	// const [t, setT] = useState(10);
-	// const [temperatureIterationIndex, setTemperatureIterationIndex] =
-	// 	useState(1);
+	});
+
 	const navigate = useNavigate();
+
 	const handleClick = (path) => {
 		navigate(`/${path}`);
 	};
 	const [redirect, setRedirect] = useState("");
+
+	//This function checks if the user has added necessary details pertaining to dishes and logistics
 	function validation() {
 		if (!dishes || dishes.length == 0) {
 			setRedirect("You haven't added any dishes, please add some dishes");
@@ -53,27 +48,15 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 		}
 	}
 
-	// const anotherFunction = async () => {
-	// 	await new Promise((resolve) => {
-	// 		setData([{ x: 1, y: 5 }]);
-	// 		setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-	// 	});
+	//This essentially invokes the validation function and performs the algorithm if the user has performed all the prerequisites needed to do so
+	useEffect(() => {
+		validation();
+		if (redirect === "") {
+			simulatedAnnealing();
+		}
+	}, [redirect]);
 
-	// 	for (let i = 2; i <= 1000; i++) {
-	// 		await new Promise((resolve) => {
-	// 			setData((prevData) => {
-	// 				const newData = prevData ? cloneDeep(prevData) : [];
-	// 				newData.push({
-	// 					x: i,
-	// 					y: Math.ceil(Math.random() * (i * 5)),
-	// 				});
-	// 				return newData;
-	// 			});
-	// 			setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-	// 		});
-	// 	}
-	// };
-
+	//This function accepts a state and randomly generates neigboring state by swapping 2 elements
 	const nextStateGenerator = (state) => {
 		if (!state || state.length < 2) {
 			return state;
@@ -90,6 +73,8 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 		nextState[index2] = temp;
 		return nextState;
 	};
+
+	//This function accepts an acceptance probability and is used to decide whether or not to accept a potentially worse state
 	const takeNextStep = (probability) => {
 		const threshold = Math.random();
 		if (probability > threshold) {
@@ -97,6 +82,8 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 		}
 		return false;
 	};
+
+	//This function accepts a state computes the corresponding objective function, viz. the cumulative cooling time, based on a smart constraint based design
 	const costFunction = (state) => {
 		if (state && state.length !== 0) {
 			let counter = 0;
@@ -107,7 +94,6 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 			let dish;
 			for (counter; counter < newNumberOfStoves; counter++) {
 				dish = state[counter];
-				// console.log("dish", dish);
 				dish.stoveCookedOn = counter + 1;
 				timesAndDishes.push({ cookedAt: dish.cookingTime, dish: dish });
 				timesAndDishes2.push({
@@ -130,12 +116,7 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 				timesAndDishes.splice(0, 1);
 				let firstPossibleCleaningTimeDuration =
 					state[counter]?.cookingTime || 0;
-				// console.log("previous cooking time", previousCookingTime);
-				// console.log("previous stove cooked on", previousStoveCookedOn);
-				// console.log(
-				// 	"first possible cleaning time duration",
-				// 	firstPossibleCleaningTimeDuration
-				// );
+
 				let numberToWash;
 				let maxCleaningTime;
 				let secondPossibleCleaningTimeDuration;
@@ -163,8 +144,6 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 				} else {
 					dish = state[counter];
 					dish.stoveCookedOn = previousStoveCookedOn;
-					// dish.cookingTime =
-					// 	dish.cookingTime + previousCookingTime + cleaningTime;
 					timesAndDishes.push({
 						cookedAt:
 							dish.cookingTime +
@@ -210,128 +189,14 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 			coolingTime = timesAndDishes2.reduce((accumulator, item) => {
 				return accumulator + maxTime - item.cookedAt;
 			}, 0);
-			// console.log("times and dishes ", timesAndDishes);
-			// console.log("times and dishes 2", timesAndDishes2);
-			// console.log("cooling time", coolingTime);
-			// console.log("max time", maxTime);
-			// console.log("**********************");
-			// console.log("total cooking time", maxTime);
+
 			return coolingTime;
 		}
 	};
-	// let tInitial = 10;
-	// // let t = tInitial;
-	// let alpha = 0.9;
-	// let tMin = 0.1;
-	// let nextState;
-	// let eCurrentState;
-	// let eNextState;
-	// let deltaE;
-	// let probability;
-	// let decision;
-	// // let iteration = 1;
-	// // let temperatureIterationIndex = 1;
-	// let temperatureIterationMaxIndex = 100;
-	useEffect(() => {
-		validation();
-		if (redirect === "") {
-			simulatedAnnealing();
-		}
-	}, [redirect]);
-	// useEffect(() => {
-	// 	// setOptimizedState(null);
-	// 	// setProgress(0);
-	// 	// validation();
-	// 	if (redirect === "") {
-	// 		setData([{ x: iteration, y: costFunction(currentState) }]);
-	// 		console.log("came here1");
 
-	// 		if (t > tMin) {
-	// 			if (temperatureIterationIndex <= temperatureIterationMaxIndex) {
-	// 				console.log("iteration", iteration);
-	// 				console.log("temperature", t);
-	// 				console.log("current state", currentState);
-	// 				console.log(
-	// 					"temperature iteration index",
-	// 					temperatureIterationIndex
-	// 				);
-	// 				console.log("came here2");
-
-	// 				// temperatureIterationIndex++;
-	// 				nextState = nextStateGenerator(currentState);
-	// 				eCurrentState = costFunction(currentState);
-	// 				eNextState = costFunction(nextState);
-	// 				deltaE = eNextState - eCurrentState;
-	// 				if (deltaE < 0) {
-	// 					setTemperatureIterationIndex(
-	// 						(prevTemperatureIterationIndex) =>
-	// 							prevTemperatureIterationIndex + 1
-	// 					);
-	// 					setCurrentState((prevState) => {
-	// 						console.log("came here3");
-	// 						return nextState;
-	// 					});
-	// 				} else {
-	// 					console.log("came here4");
-	// 					probability = 1.0 / (1 + Math.exp(deltaE / t));
-	// 					// console.log("probability", probability);
-	// 					decision = takeNextStep(probability);
-	// 					// console.log("decision", decision);
-	// 					if (decision) {
-	// 						console.log("came here 5");
-	// 						setTemperatureIterationIndex(
-	// 							(prevTemperatureIterationIndex) =>
-	// 								prevTemperatureIterationIndex + 1
-	// 						);
-	// 						setCurrentState((prevState) => nextState);
-	// 					} else {
-	// 						console.log("came here 6");
-	// 						setTemperatureIterationIndex(
-	// 							(prevTemperatureIterationIndex) =>
-	// 								prevTemperatureIterationIndex + 1
-	// 						);
-	// 						setCurrentState(cloneDeep(currentState));
-	// 					}
-	// 				}
-	// 			} else {
-	// 				// t = t * alpha >= tMin ? t * alpha : tMin;
-	// 				console.log("came here 7");
-	// 				setT((prevT) =>
-	// 					prevT * alpha >= tMin ? prevT * alpha : tMin
-	// 				);
-	// 				// iteration++;
-	// 				setIteration((prevIteration) => prevIteration + 1);
-	// 				setTemperatureIterationIndex(1);
-	// 				// temperatureIterationIndex = 1;
-	// 				setProgress((prevProgress) => {
-	// 					let completed = tInitial - t;
-	// 					let total = tInitial - tMin;
-	// 					let percentageCompleted = (completed / total) * 100;
-	// 					return percentageCompleted;
-	// 				});
-	// 				setData((prevData) => {
-	// 					const newData = prevData ? cloneDeep(prevData) : [];
-	// 					newData.push({ x: iteration, y: costFunction(dishes) });
-	// 					return newData;
-	// 				});
-	// 			}
-	// 		} else {
-	// 			console.log("came here 8");
-	// 			setTemperatureIterationIndex(1);
-	// 			setIteration(1);
-	// 			setOptimizedState(currentState);
-	// 		}
-	// 	}
-	// }, [
-	// 	currentState,
-	// 	iteration,
-	// 	t,
-	// 	temperatureIterationIndex,
-	// 	temperatureIterationMaxIndex,
-	// ]);
 	let dataPoints = [];
-	// useEffect(() => console.log(dataPoints), [dataPoints]);
-	console.log(dataPoints);
+
+	//This function performs simulated annealing and returns the optimized state when the annealing temperature which is set to the initial temperature is reduced to the final temperature
 	const simulatedAnnealing = async () => {
 		await new Promise((resolve) => {
 			setOptimizedState(null);
@@ -341,7 +206,6 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 		let t = tInitial;
 		let alpha = 0.99;
 		let tMin = 1;
-		// console.log("dishes", currentState);
 		let nextState;
 		let eCurrentState;
 		let eNextState;
@@ -363,9 +227,6 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 		});
 
 		while (t > tMin) {
-			// console.log("temperature", temperature);
-			// console.log("---");
-			// console.log("coolingTime", coolingTime);
 			for (let i = 0; i < 100; i++) {
 				nextState = nextStateGenerator(localCurrentState);
 				eCurrentState = costFunction(localCurrentState);
@@ -383,25 +244,13 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 				console.log("cost of next state", costFunction(nextState));
 				console.log("data points", dataPoints);
 				if (deltaE < 0) {
-					// await new Promise((resolve) => {
-					// 	setCurrentState(nextState);
-					// 	setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-					// });
 					localCurrentState = nextState;
-					// flushSync(() => {
-					// 	setCurrentState(nextState);
-					// });
 				} else {
 					probability = 1.0 / Math.exp(deltaE / t);
 					console.log("probability", probability);
 					decision = takeNextStep(probability);
 					console.log("decision", decision);
 					if (decision) {
-						// console.log("inside decision");
-						// await new Promise((resolve) => {
-						// 	setCurrentState((prevState) => nextState);
-						// 	setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-						// });
 						localCurrentState = nextState;
 					}
 				}
@@ -434,11 +283,7 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
 			});
 		}
-		// await new Promise((resolve) => {
-		// 	setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-		// });
-		console.log("final data points", dataPoints);
-		// setData(dataPoints);
+
 		setSuccess(
 			"Simulated annealing is now complete, and the smart schedule has been made available for your perusal."
 		);
@@ -448,23 +293,11 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 	return (
 		<Box
 			sx={{
-				// position: "absolute",
-				// top: 0,
-				// bottom: 0,
-				// left: 0,
-				// right: 0,
-				// zIndex: -1,
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
 			}}
 		>
-			{/* {!redirect && (
-				<ChartComponent
-					x={temperature}
-					y={coolingTime}
-				></ChartComponent>
-			)} */}
 			{!redirect && (
 				<Box>
 					<SimulatedAnnealingChart data={data} progress={progress} />
@@ -477,7 +310,6 @@ export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 						{redirect}
 					</Typography>
 					<Button
-						// color="inherit"
 						onClick={() =>
 							handleClick(
 								redirect.includes("dishes")

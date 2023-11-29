@@ -1,5 +1,6 @@
+//This component is receives props from the SimulatedAnnealingChart component, which represents the percentage completion at any point within the algorithm's execution and dynamically displays it
+
 import * as React from "react";
-import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -19,14 +20,6 @@ function LinearProgressWithLabel(props) {
 		</Box>
 	);
 }
-
-// LinearProgressWithLabel.propTypes = {
-// 	/**
-// 	 * The value of the progress indicator for the determinate and buffer variants.
-// 	 * Value between 0 and 100.
-// 	 */
-// 	value: PropTypes.number.isRequired,
-// };
 
 export const ProgressBar = ({ progress }) => {
 	return (

@@ -1,3 +1,5 @@
+//This component is used by various containers and pages to generate a success alert to promptly inform the user about the successful completion of a wide variety of taks, such as successful addition, modification, and/or deletion of a dish, successful addition and/or updation of logisitical details, successful completion of the simulated annealing algorithm and subsequent generation of the smart schedule.
+
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";

@@ -1,3 +1,5 @@
+//This file is the main component representing the entire application, it imports the necessary pages and renders them based on client side routing
+
 import React from "react";
 import { Home, Logistics, SmartSchedule, SimulatedAnnealing } from "./pages";
 import { Provider } from "./context/stateContext";

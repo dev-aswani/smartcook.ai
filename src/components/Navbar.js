@@ -1,3 +1,5 @@
+//This component is imported at the application level and is rendered across the entire application to facilitate easy naviagtion to different sections in a user friendly manner. This component also highlights the section at which the user currently.
+
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,12 +12,15 @@ import { Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 export const Navbar = () => {
 	const [currentPage, setCurrentPage] = useState("/");
+
 	const navigate = useNavigate();
+
+	//This function allows the user to navigate to different sections in the application.
 	const handleClick = (path) => {
 		navigate(`/${path}`);
 		setCurrentPage(`/${path}`);
 	};
-	// console.log(currentPage);
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar
@@ -33,6 +38,7 @@ export const Navbar = () => {
 					<Stack direction="row" spacing={1}>
 						<Button
 							color="inherit"
+							//This function is used to invoke the handleClick function which then navigates to the Dishes section.
 							onClick={() => handleClick("dishes")}
 							sx={{
 								backgroundColor:
@@ -46,6 +52,7 @@ export const Navbar = () => {
 						</Button>
 						<Button
 							color="inherit"
+							//This function is used to invoke the handleClick function which then navigates to the Logistics section.
 							onClick={() => handleClick("logistics")}
 							sx={{
 								backgroundColor:
@@ -58,6 +65,7 @@ export const Navbar = () => {
 						</Button>
 						<Button
 							color="inherit"
+							//This function is used to invoke the handleClick function which then navigates to the Dishes section.
 							onClick={() => handleClick("simulated-annealing")}
 							sx={{
 								backgroundColor:
@@ -70,6 +78,7 @@ export const Navbar = () => {
 						</Button>
 						<Button
 							color="inherit"
+							//This function is used to invoke the handleClick function which then navigates to the Smart Schedule section.
 							onClick={() => handleClick("smart-schedule")}
 							sx={{
 								backgroundColor:

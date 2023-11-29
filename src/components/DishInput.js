@@ -1,3 +1,5 @@
+//This component is imported by the HomeContainer used to take user input pertaining to dish details while adding and updating a dish, and also performs the necessary validation while at it.
+
 import { useEffect, useState, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
 import { capitalize, cloneDeep } from "lodash";
@@ -11,12 +13,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 	const { dishes, setDishes } = useContext(dishesContext);
+
 	const [open, setOpen] = useState(false);
+
 	const [dishName, setDishName] = useState(null);
+
 	const [cookingTime, setCookingTime] = useState(null);
+
 	const [dishNameError, setDishNameError] = useState(null);
+
 	const [cookingTimeError, setCookingTimeError] = useState(null);
-	// console.log(dishes);
+
+	//This hook basically handles the updates whenever the user wishes to update a dish by opening a modal displaying the current details of the dish and asking the user to enter the updated details and to confirm the updates
 	useEffect(() => {
 		if (editModeIndex !== null) {
 			setOpen(true);
@@ -26,10 +34,12 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 		}
 	}, [editModeIndex]);
 
+	//This function is used to handle user reuqests to add a dish when the user clicks on the add dish button by opening a dialog, asking the user to enter the details of the dish to be added
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
 
+	//This function is used to handle cancellation of a user request to add or edit a dish by closing the modal
 	const handleClose = () => {
 		setDishName(null);
 		setCookingTime(null);
@@ -38,6 +48,7 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 		setOpen(false);
 	};
 
+	//This function is used to handle user requests to add a dish when the user confirms the details of the dish to be added by modifying the dishes state stored and maintained in the stateContext
 	const handleAddDish = () => {
 		const currentDishes = dishes ? cloneDeep(dishes) : [];
 		currentDishes.push({
@@ -46,10 +57,10 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 		});
 		setDishes(currentDishes);
 		handleClose();
-		// const newItemPage = Math.ceil(currentDishes.length / pageSize);
 		setSuccess("Dish Added Successfully");
 	};
 
+	//This function is used to handle user requests to add a dish when the user confirms the details of the dish to be edited, by modifying the dishes state stored and maintained in the stateContext
 	const handleEditDish = () => {
 		const currentDishes = dishes ? cloneDeep(dishes) : [];
 		currentDishes[editModeIndex] = {
@@ -84,6 +95,7 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 					</DialogContentText>
 					<TextField
 						value={dishName ?? ""}
+						//This function is used to read user input for the updated dish name and update the local state corresponding to the updated dish name, which will be ulitmately used to modify the dish name in dishes array stored and maintained in the stateContext upon confirmation by the user. It also performs the necessary validation while at it.
 						onChange={(event) => {
 							let value = capitalize(event.target.value);
 							if (dishName && value === "") {
@@ -104,6 +116,7 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 					/>
 					<TextField
 						value={cookingTime ?? ""}
+						//This function is used to read user input for the updated dish cooking time and update the local state corresponding to the updated dish cooking time, which will be ulitmately used to modify the dish cooking time in dishes array stored and maintained in the stateContext upon confirmation by the user. It also performs the necessary validation while at it, allowing the user to enter only positive integral values for the updated dish cooking time.
 						onChange={(event) => {
 							let value = event.target.value;
 							if (cookingTime && value === "") {
