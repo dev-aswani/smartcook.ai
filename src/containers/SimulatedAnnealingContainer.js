@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
 import { Navbar } from "../components";
-import { ChartComponent, ProgressBar } from "../components";
+import { SimulatedAnnealingChart, ProgressBar } from "../components";
 import { capitalize, cloneDeep, shuffle } from "lodash";
 import { Link } from "react-router-dom";
 import { Box, Button, MenuPaper, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { flushSync } from "react-dom";
 
-export const ChartPageContent = ({ success, setSuccess }) => {
+export const SimulatedAnnealingContainer = ({ success, setSuccess }) => {
 	const {
 		temperature,
 		coolingTime,
@@ -467,7 +467,7 @@ export const ChartPageContent = ({ success, setSuccess }) => {
 			)} */}
 			{!redirect && (
 				<Box>
-					<ChartComponent data={data} progress={progress} />
+					<SimulatedAnnealingChart data={data} progress={progress} />
 				</Box>
 			)}
 

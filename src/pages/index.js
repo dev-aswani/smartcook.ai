@@ -1,4 +1,4 @@
-export { HomePage } from "./HomePage";
-export { DetailsPage } from "./DetailsPage";
-export { ChartPage } from "./ChartPage";
-export { SmartSchedulePage } from "./SmartSchedulePage";
+export { Home } from "./Home";
+export { Logistics } from "./Logistics";
+export { SimulatedAnnealing } from "./SimulatedAnnealing";
+export { SmartSchedule } from "./SmartSchedule";

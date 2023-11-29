@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import { theme } from "../utils";
 import { dishesContext } from "../context/stateContext";
 import { SuccessAlert } from "../components";
-export const DetailsPageContent = ({ success, setSuccess }) => {
+export const LogisticsContent = ({ success, setSuccess }) => {
 	const {
 		numberOfPans,
 		setNumberOfPans,

@@ -5,7 +5,7 @@ import { ProgressBar } from "./ProgressBar";
 import { theme } from "../utils";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-export const ChartComponent = ({ data, progress }) => {
+export const SimulatedAnnealingChart = ({ data, progress }) => {
 	const [dps, setDps] = useState([
 		{ x: 1, y: 10 },
 		{ x: 2, y: 13 },

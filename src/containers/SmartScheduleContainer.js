@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
 import { useNavigate } from "react-router-dom";
-import { SmartScheduleContentComponent } from "../components";
+import { SmartScheduleContent } from "../components";
 import { Box, Button, Paper, Typography } from "@mui/material";
-export const SmartSchedulePageContent = () => {
+export const SmartScheduleContainer = () => {
 	const {
 		temperature,
 		coolingTime,
@@ -360,9 +360,7 @@ export const SmartSchedulePageContent = () => {
 				alignItems: "center",
 			}}
 		>
-			{!redirect && (
-				<SmartScheduleContentComponent content={logContent} />
-			)}
+			{!redirect && <SmartScheduleContent content={logContent} />}
 			{redirect && (
 				<Paper elevation={1} sx={{ p: 4 }}>
 					<Typography sx={{ mb: 2.5, color: "text.secondary" }}>

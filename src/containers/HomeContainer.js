@@ -4,7 +4,7 @@ import { Typography, TextField, Stack } from "@mui/material";
 import { dishesData } from "../constants";
 import { DishList, DishInput } from "../components";
 import { SuccessAlert } from "../components";
-export const MainContent = () => {
+export const HomeContainer = () => {
 	const [editModeIndex, setEditModeIndex] = useState(null);
 	const [success, setSuccess] = useState(null);
 	return (

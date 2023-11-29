@@ -149,7 +149,7 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 							cookingTimeError
 						}
 					>
-						{editModeIndex !== null ? "Save Changes" : "Add Item"}
+						{editModeIndex !== null ? "Save Changes" : "Add Dish"}
 					</Button>
 				</DialogActions>
 			</Dialog>

@@ -1,4 +1,4 @@
-export { MainContent } from "./MainContent";
-export { DetailsPageContent } from "./DetailsPageContent";
-export { ChartPageContent } from "./ChartPageContent";
-export { SmartSchedulePageContent } from "./SmartSchedulePageContent";
+export { HomeContainer } from "./HomeContainer";
+export { LogisticsContent } from "./LogisticsContent";
+export { SimulatedAnnealingContainer } from "./SimulatedAnnealingContainer";
+export { SmartScheduleContainer } from "./SmartScheduleContainer";

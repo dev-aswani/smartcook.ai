@@ -1,5 +1,5 @@
 import React from "react";
-import { HomePage, DetailsPage, ChartPage, SmartSchedulePage } from "./pages";
+import { Home, Logistics, SmartSchedule, SimulatedAnnealing } from "./pages";
 import { Provider } from "./context/stateContext";
 import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components";
@@ -10,16 +10,16 @@ function App() {
 			<Navbar></Navbar>
 			<Box my={3} textAlign={"center"} alignItems={"center"}>
 				<Routes>
-					<Route path="/" element={<HomePage />}></Route>
-					<Route path="/dishes" element={<HomePage />}></Route>
-					<Route path="/logistics" element={<DetailsPage />}></Route>
+					<Route path="/" element={<Home />}></Route>
+					<Route path="/dishes" element={<Home />}></Route>
+					<Route path="/logistics" element={<Logistics />}></Route>
 					<Route
 						path="/simulated-annealing"
-						element={<ChartPage />}
+						element={<SimulatedAnnealing />}
 					></Route>
 					<Route
 						path="/smart-schedule"
-						element={<SmartSchedulePage />}
+						element={<SmartSchedule />}
 					></Route>
 				</Routes>
 			</Box>
