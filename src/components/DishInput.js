@@ -1,4 +1,4 @@
-//This component is imported by the HomeContainer used to take user input pertaining to dish details while adding and updating a dish, and also performs the necessary validation while at it.
+//This component is imported by the HomeContainer used to take user input pertaining to dish details while adding and updating a dish, in conjunction with Dish and DishList components, and also performs the necessary validation while at it.
 
 import { useEffect, useState, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
@@ -103,7 +103,7 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 							} else {
 								setDishNameError(null);
 							}
-							setDishName(value);
+							setDishName(value || "");
 						}}
 						margin="dense"
 						id="Dish Name"
@@ -123,18 +123,18 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 								setCookingTimeError(
 									"Dish cooking time is required"
 								);
-							} else if (parseInt(value) != value) {
-								setCookingTimeError(
-									"Dish cooking time must be integral"
-								);
 							} else if (parseInt(value) <= 0) {
 								setCookingTimeError(
 									"Dish cooking time must be positive"
 								);
+							} else if (parseInt(value) != value) {
+								setCookingTimeError(
+									"Dish cooking time must be integral"
+								);
 							} else {
 								setCookingTimeError(null);
 							}
-							setCookingTime(parseInt(value));
+							setCookingTime(parseInt(value) || "");
 						}}
 						margin="dense"
 						id="Cooking Time"

@@ -1,4 +1,4 @@
-//This component is receives props from the SimulatedAnnealingChart component, which represents the percentage completion at any point within the algorithm's execution and dynamically displays it
+//This component is imported by the SimulatedAnnealingChart component, and is used to dynamically display the percentage completion at any point within the algorithm's execution
 
 import * as React from "react";
 import LinearProgress from "@mui/material/LinearProgress";

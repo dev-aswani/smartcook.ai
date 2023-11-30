@@ -1,4 +1,4 @@
-//This container is used to generate the smart schedule by accessing the optimized state from the stateContext and subsequently determining the schedule and computing the cumulative and average cooling times and also imports the necessary components required to accomplish the aforementioned tasks.
+//This container is used to generate the smart schedule by accessing the optimized state from the stateContext and subsequently determining the schedule and computing the cumulative and average cooling times and also imports the SmartScheduleContent component, required to accomplish the aforementioned tasks.
 
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
@@ -61,7 +61,7 @@ export const SmartScheduleContainer = () => {
 				setLogContent(
 					"The following schedule has been generated using the Simulated Annealing Algorithm in a bid to minimize the overall cooling time"
 				);
-				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+				setTimeout(resolve, 0);
 			});
 			await new Promise((resolve) => {
 				setLogContent((prevLogContent) => {
@@ -69,7 +69,7 @@ export const SmartScheduleContainer = () => {
 					newLogContent += "----------At the 0th minute:\n";
 					return newLogContent;
 				});
-				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+				setTimeout(resolve, 0);
 			});
 			for (counter; counter < newNumberOfStoves; counter++) {
 				dish = state[counter];
@@ -93,7 +93,7 @@ export const SmartScheduleContainer = () => {
 							" minutes)";
 						return newLogContent;
 					});
-					setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+					setTimeout(resolve, 0);
 				});
 				numberOfWashedPans--;
 			}
@@ -161,7 +161,7 @@ export const SmartScheduleContainer = () => {
 							}
 							return newLogContent;
 						});
-						setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+						setTimeout(resolve, 0);
 					});
 					numberOfWashedPans--;
 					timesAndDishes.sort(
@@ -225,7 +225,7 @@ export const SmartScheduleContainer = () => {
 							}
 							return newLogContent;
 						});
-						setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+						setTimeout(resolve, 0);
 					});
 
 					numberOfWashedPans++;
@@ -268,7 +268,7 @@ export const SmartScheduleContainer = () => {
 										" gets cooked ";
 									return newLogContent;
 								});
-								setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+								setTimeout(resolve, 0);
 							});
 						} else {
 							await new Promise((resolve) => {
@@ -282,7 +282,7 @@ export const SmartScheduleContainer = () => {
 										" gets cooked ";
 									return newLogContent;
 								});
-								setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+								setTimeout(resolve, 0);
 							});
 						}
 					} else {
@@ -296,7 +296,7 @@ export const SmartScheduleContainer = () => {
 										" gets cooked ";
 									return newLogContent;
 								});
-								setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+								setTimeout(resolve, 0);
 							});
 						} else {
 							await new Promise((resolve) => {
@@ -310,7 +310,7 @@ export const SmartScheduleContainer = () => {
 										" gets cooked ";
 									return newLogContent;
 								});
-								setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+								setTimeout(resolve, 0);
 							});
 						}
 					}
@@ -330,11 +330,11 @@ export const SmartScheduleContainer = () => {
 						coolingTime +
 						" minutes" +
 						"\nAverage Minimum Cooling Time per dish is " +
-						coolingTime / optimizedState?.length +
+						(coolingTime / optimizedState?.length).toFixed(2) +
 						" minutes";
 					return newLogContent;
 				});
-				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+				setTimeout(resolve, 0);
 			});
 		}
 	};

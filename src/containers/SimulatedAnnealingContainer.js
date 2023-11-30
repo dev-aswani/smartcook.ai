@@ -1,4 +1,4 @@
-//This container performs the simulated annealing and is used to generate the graphical reperesentation of the simulated annealing algorithm along with the progress bar that depicts the percentage completion at any point within the algorithm's execution time and also imports the necessary components required to accomplish the aofrementioned tasks.
+//This container performs the simulated annealing by accessing the simulated annealing function from the stateContext. It displays a graphical representation of the simulated annealing algorithm along with the progress bar that depicts the percentage completion at any point within the algorithm's execution time and also imports the necessary components required to accomplish the aforementioned tasks.
 
 import React, { useState, useEffect, useContext } from "react";
 import { dishesContext } from "../context/stateContext";

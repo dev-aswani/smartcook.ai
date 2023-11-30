@@ -8,14 +8,23 @@ export const dishesContext = createContext();
 export const Provider = ({ children }) => {
 	const [dishes, setDishes] = useState(dishesData);
 	// const [dishes, setDishes] = useState([]);
-	const [numberOfPans, setNumberOfPans] = useState(5);
-	const [numberOfStoves, setNumberOfStoves] = useState(10);
-	const [cleaningTime, setCleaningTime] = useState(5);
+
+	const [numberOfPans, setNumberOfPans] = useState(null);
+
+	const [numberOfStoves, setNumberOfStoves] = useState(null);
+
+	const [cleaningTime, setCleaningTime] = useState(null);
+
 	const [temperature, setTemperature] = useState(null);
+
 	const [coolingTime, setCoolingTime] = useState(null);
+
 	const [optimizedState, setOptimizedState] = useState(null);
+
 	const [progress, setProgress] = useState(0);
+
 	const [data, setData] = useState([]);
+
 	const [currentState, setCurrentState] = useState(() => {
 		let newDishes = dishes ? cloneDeep(dishes) : [];
 		for (let i = 0; i < 10; i++) {
@@ -69,10 +78,18 @@ export const Provider = ({ children }) => {
 		if (state && state.length !== 0) {
 			let counter = 0;
 			let numberOfWashedPans = numberOfPans;
+			//incase the number of stoves and pans are not equal this variable stores the minimum of those two
 			let newNumberOfStoves = Math.min(numberOfPans, numberOfStoves);
+
+			//This array is used to  to store the cumulative time for each stove and the dish, paired with the dish currently being prepared. It is at all times, sorted in the ascending order of cookedAt attribue
+
 			let timesAndDishes = [];
+
+			//This array is used for calculating the effective cooling time
 			let timesAndDishes2 = [];
 			let dish;
+
+			//This loop corresponds to placing the very first batch of dishes on the stoves
 			for (counter; counter < newNumberOfStoves; counter++) {
 				dish = state[counter];
 				dish.stoveCookedOn = counter + 1;
@@ -83,13 +100,18 @@ export const Provider = ({ children }) => {
 				});
 				numberOfWashedPans--;
 			}
+
+			//sorting timesAndDishes
 			timesAndDishes.sort(
 				(item1, item2) => item1.cookedAt - item2.cookedAt
 			);
+
+			//sorting timesAndDishes2
 			timesAndDishes2.sort(
 				(item1, item2) => item1.cookedAt - item2.cookedAt
 			);
 
+			//This corresponds to handling the remaining dishes based on pan-stove availability, after the dishes in the very first batch are cooked.
 			for (counter; counter < state.length; counter++) {
 				let previousCookingTime = timesAndDishes[0]?.cookedAt || 0;
 				let previousStoveCookedOn =
@@ -152,6 +174,8 @@ export const Provider = ({ children }) => {
 					numberOfWashedPans++;
 					numberOfWashedPans--;
 				}
+
+				//This represents the time available to clean the pans while dishes are being cooked to effectively utilize time
 				maxCleaningTime = Math.min(
 					firstPossibleCleaningTimeDuration,
 					secondPossibleCleaningTimeDuration
@@ -165,7 +189,10 @@ export const Provider = ({ children }) => {
 				numberOfWashedPans += numberToWash;
 			}
 
+			//This represents the cumulative cooking time
 			let maxTime = timesAndDishes[timesAndDishes.length - 1]?.cookedAt;
+
+			//This represents the cumulative cooling time
 			let coolingTime;
 			coolingTime = timesAndDishes2.reduce((accumulator, item) => {
 				return accumulator + maxTime - item.cookedAt;
@@ -174,65 +201,71 @@ export const Provider = ({ children }) => {
 			return coolingTime;
 		}
 	};
-
-	let dataPoints = [];
+	//Local variable to hold the data points required for dynamically plotting the graph
+	// let dataPoints = [];
 
 	//This function performs simulated annealing and returns the optimized state when the annealing temperature which is set to the initial temperature is reduced to the final temperature
 	const simulatedAnnealing = async () => {
 		if (optimizedState) return;
-		await new Promise((resolve) => {
-			setOptimizedState(null);
-			setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
-		});
 		let tInitial = 10000;
+
+		//Annealing temperature set to initial temperature at the beginning of the algorithm
 		let t = tInitial;
+
+		//This represents the cooling factor
 		let alpha = 0.99;
+
+		//This represents the terminal temperature, and is used as the stopping condition of the algorithm
 		let tMin = 1;
+
+		//This represents a neigboring state
 		let nextState;
+
+		//This represents the cumulative cooling time of the current state
 		let eCurrentState;
+
+		//This represnts the cumulative cooling time of the neigboring state
 		let eNextState;
+
+		//This represents the difference in the cooling times of the neigboring and current states
 		let deltaE;
+
+		//This represents the acceptance probability of a potentially worse state
 		let probability;
+
+		//This represents the decision to take based on the acceptance probability
 		let decision;
+
+		//This represents the iteration corresponding to a particular temperature
 		let iteration = 1;
 		let localCurrentState = currentState;
 
 		await new Promise((resolve) => {
 			setData([{ x: iteration, y: costFunction(localCurrentState) }]);
-			setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+			setTimeout(resolve, 0);
 		});
 
-		dataPoints.push({ x: iteration, y: costFunction(localCurrentState) });
+		// dataPoints.push({ x: iteration, y: costFunction(localCurrentState) });
 
 		while (t > tMin) {
+			//This loop represents spending a particular amount of time, in this case 100 sub iterations at a particular temperature and then decreasing the temperature by the cooling factor
 			for (let i = 0; i < 100; i++) {
 				nextState = nextStateGenerator(localCurrentState);
 				eCurrentState = costFunction(localCurrentState);
 				eNextState = costFunction(nextState);
 				deltaE = eNextState - eCurrentState;
-				// console.log("iteration", iteration);
-				// console.log("temperature", t);
-				// console.log("current state", localCurrentState);
-				// console.log(
-				// 	"cost of current state",
-				// 	costFunction(localCurrentState)
-				// );
-				// console.log("delta e", deltaE);
-				// console.log("next state", nextState);
-				// console.log("cost of next state", costFunction(nextState));
-				// console.log("data points", dataPoints);
 				if (deltaE < 0) {
 					localCurrentState = nextState;
 				} else {
+					//Acceptance probability calculated using the Metropolis criterion
 					probability = 1.0 / Math.exp(deltaE / t);
-					// console.log("probability", probability);
 					decision = takeNextStep(probability);
-					// console.log("decision", decision);
 					if (decision) {
 						localCurrentState = nextState;
 					}
 				}
 			}
+			//Decreasing the annealing temperature by the cooling factor
 			t = t * alpha >= tMin ? t * alpha : tMin;
 			iteration++;
 			await new Promise((resolve) => {
@@ -242,13 +275,14 @@ export const Provider = ({ children }) => {
 					let percentageCompleted = (completed / total) * 100;
 					return percentageCompleted;
 				});
-				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+				setTimeout(resolve, 0);
 			});
 
-			dataPoints.push({
-				x: iteration,
-				y: costFunction(localCurrentState),
-			});
+			// dataPoints.push({
+			// 	x: iteration,
+			// 	y: costFunction(localCurrentState),
+			// });
+			//Setting the state, data, passed to the SimulatedAnnealingChart component that is used for dynamically plotting the graph
 			await new Promise((resolve) => {
 				setData((prevData) => {
 					const newData = prevData ? cloneDeep(prevData) : [];
@@ -258,13 +292,14 @@ export const Provider = ({ children }) => {
 					});
 					return newData;
 				});
-				setTimeout(resolve, 0); // Use setTimeout to create a micro-task and allow the state to update
+				setTimeout(resolve, 0);
 			});
 		}
 
 		setSuccess(
 			"Simulated annealing is now complete, and the smart schedule has been made available for your perusal."
 		);
+		//Setting the optimized state at the end of the algorithm
 		setOptimizedState(localCurrentState);
 	};
 

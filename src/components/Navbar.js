@@ -1,6 +1,6 @@
 //This component is imported at the application level and is rendered across the entire application to facilitate easy naviagtion to different sections in a user friendly manner. This component also highlights the section at which the user currently.
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,16 +9,23 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { theme } from "../utils/theme";
 import { Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 export const Navbar = () => {
-	const [currentPage, setCurrentPage] = useState("/");
+	const location = useLocation();
+
+	const [currentPage, setCurrentPage] = useState(location.pathname);
 
 	const navigate = useNavigate();
+
+	// This essentially sets the current page based on the pathname when the component mounts
+	useEffect(() => {
+		setCurrentPage(location.pathname);
+	}, [location.pathname]);
 
 	//This function allows the user to navigate to different sections in the application.
 	const handleClick = (path) => {
 		navigate(`/${path}`);
-		setCurrentPage(`/${path}`);
+		setCurrentPage(`${path}`);
 	};
 
 	return (

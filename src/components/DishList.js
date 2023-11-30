@@ -1,4 +1,4 @@
-//This component is imported by the HomeContainer, and is used to display the list of dish names and cooking times added by the user in a tabular format. It also handles user requests pertaining to updating and/or deleting dishes by modifying the dishes state accessed from the stateContext
+//This component is imported by the HomeContainer, and is used to display the list of dish names and cooking times added by the user in a tabular format. It also handles user requests pertaining to updating and/or deleting dishes, in conjunction with the Dish and DishInput components, by modifying the dishes state accessed from the stateContext
 
 import { useState, useContext } from "react";
 import { dishesContext } from "../context/stateContext";
@@ -83,7 +83,11 @@ export const DishList = ({ setEditModeIndex, setSuccess }) => {
 				</TableContainer>
 			) : (
 				<Typography
-					sx={{ color: "text.secondary", textAlign: "center", mt: 3 }}
+					sx={{
+						color: "text.secondary",
+						textAlign: "center",
+						mt: 3,
+					}}
 				>
 					No dishes exist. Add a new dish by tapping on the above
 					button.

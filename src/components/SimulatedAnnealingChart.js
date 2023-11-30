@@ -1,4 +1,4 @@
-//This component accepts props fom the SimulatedAnnealingContainer, including data points corresponding to the simulated annealing algorithm and the percentage completion at any point within the algorithms execution time and dynamically plots the graph and displays the progress bar. It also imports the necessary components to display the progress bar
+//This component is imported by SimulatedAnnealingContainer, to dynamically plot the graph pertaining to the simulated annealing algorithm, and display the progress bar using the ProgressBar component.
 
 import React from "react";
 import CanvasJSReact from "@canvasjs/react-charts";
@@ -9,9 +9,6 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export const SimulatedAnnealingChart = ({ data, progress }) => {
 	const options = {
-		// title: {
-		// 	text: "Dynamic Line Chart",
-		// },
 		backgroundColor: "transparent",
 		data: [
 			{

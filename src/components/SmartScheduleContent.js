@@ -1,4 +1,4 @@
-//This component accepts a prop from the SmartScheduleContainer, which represents the content of the schedule and subsequently manipulates and presents it in a user friendly design
+//This component is imported by the SmartScheduleContainer, and it receives the content of the schedule and subsequently manipulates and presents it in a user friendly design
 
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";

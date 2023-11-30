@@ -1,4 +1,4 @@
-//This component is imported by the Dish List component to model and display a dish and handle the requests related to updates and/or deletes in conjunction with DishInput and DishList
+//This component is imported by the Dish List component to model and display a dish and handle the requests related to updates and/or deletes, in conjunction with DishInput and DishList components.
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import TableCell from "@mui/material/TableCell";

@@ -1,4 +1,4 @@
-//This container is used to read and update the user input pertaining to dish details such as dish names and cooking times, also performing the necessary validation while at it. It imports the necessary components required to accomplish the aforementioned tasks
+//This container is used to read and update the user input pertaining to dish details such as dish names and cooking times, also performing the necessary validation while at it. It imports the necessary components,DishInput and DishList required to accomplish the aforementioned tasks
 
 import React, { useState } from "react";
 import { DishList, DishInput } from "../components";
