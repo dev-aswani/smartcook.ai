@@ -8,11 +8,11 @@ export const dishesContext = createContext();
 export const Provider = ({ children }) => {
 	const [dishes, setDishes] = useState(dishesData);
 
-	const [numberOfPans, setNumberOfPans] = useState(null);
+	const [numberOfPans, setNumberOfPans] = useState(5);
 
-	const [numberOfStoves, setNumberOfStoves] = useState(null);
+	const [numberOfStoves, setNumberOfStoves] = useState(10);
 
-	const [cleaningTime, setCleaningTime] = useState(null);
+	const [cleaningTime, setCleaningTime] = useState(5);
 
 	const [temperature, setTemperature] = useState(null);
 
@@ -200,8 +200,6 @@ export const Provider = ({ children }) => {
 			return coolingTime;
 		}
 	};
-	//Local variable to hold the data points required for dynamically plotting the graph
-	// let dataPoints = [];
 
 	//This function performs simulated annealing and returns the optimized state when the annealing temperature which is set to the initial temperature is reduced to the final temperature
 	const simulatedAnnealing = async () => {
@@ -277,11 +275,6 @@ export const Provider = ({ children }) => {
 				setTimeout(resolve, 0);
 			});
 
-			// dataPoints.push({
-			// 	x: iteration,
-			// 	y: costFunction(localCurrentState),
-			// });
-			//Setting the state, data, passed to the SimulatedAnnealingChart component that is used for dynamically plotting the graph
 			await new Promise((resolve) => {
 				setData((prevData) => {
 					const newData = prevData ? cloneDeep(prevData) : [];
@@ -294,12 +287,18 @@ export const Provider = ({ children }) => {
 				setTimeout(resolve, 0);
 			});
 		}
+		await new Promise((resolve) => {
+			setSuccess(
+				"Simulated annealing is now complete, and the smart schedule has been made available for your perusal."
+			);
+			setTimeout(resolve, 0);
+		});
 
-		setSuccess(
-			"Simulated annealing is now complete, and the smart schedule has been made available for your perusal."
-		);
 		//Setting the optimized state at the end of the algorithm
-		setOptimizedState(localCurrentState);
+		await new Promise((resolve) => {
+			setOptimizedState(localCurrentState);
+			setTimeout(resolve, 0);
+		});
 	};
 
 	return (
