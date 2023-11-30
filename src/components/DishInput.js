@@ -10,9 +10,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Tooltip from "@mui/material/Tooltip";
+import { Typography } from "@mui/material";
+// import { stateContext } from "../context/stateContext";
 
 export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
-	const { dishes, setDishes } = useContext(dishesContext);
+	const { progress, dishes, setDishes } = useContext(dishesContext);
 
 	const [open, setOpen] = useState(false);
 
@@ -74,13 +77,31 @@ export const DishInput = ({ editModeIndex, setEditModeIndex, setSuccess }) => {
 
 	return (
 		<>
-			<Button
-				variant="contained"
-				onClick={handleClickOpen}
-				sx={{ mt: 1, display: "block", mx: "auto" }}
-			>
-				Add Dish
-			</Button>
+			{progress > 0 && progress < 100 ? (
+				<>
+					<Button
+						variant="contained"
+						onClick={handleClickOpen}
+						sx={{ mt: 1, display: "block", mx: "auto" }}
+						disabled={true}
+					>
+						Add Dish
+					</Button>
+					<Typography sx={{ color: "text.secondary", my: 1 }}>
+						Simulated annealing in progress, cannot add, edit or
+						delete dishes right now.
+					</Typography>
+				</>
+			) : (
+				<Button
+					variant="contained"
+					onClick={handleClickOpen}
+					sx={{ mt: 1, display: "block", mx: "auto" }}
+				>
+					Add Dish
+				</Button>
+			)}
+
 			<Dialog open={open} onClose={handleClose}>
 				<DialogTitle>
 					{editModeIndex !== null ? "Edit" : "Add"} Dish

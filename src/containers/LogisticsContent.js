@@ -16,6 +16,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 		setNumberOfStoves,
 		cleaningTime,
 		setCleaningTime,
+		progress,
 	} = useContext(dishesContext);
 
 	const [cleaningTimeError, setCleaningTimeError] = useState(null);
@@ -77,6 +78,12 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 					>
 						Details
 					</Typography>
+					{progress > 0 && progress < 100 && (
+						<Typography sx={{ color: "text.secondary", my: 1 }}>
+							Simulated annealing in progress, cannot edit
+							logistical details
+						</Typography>
+					)}
 
 					<TextField
 						value={currentNumberOfPans ?? ""}
@@ -87,6 +94,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 						type="number"
 						fullWidth
 						variant="standard"
+						disabled={progress > 0 && progress < 100}
 						sx={{ mb: 1, color: "text.secondary" }}
 						//This function is used to perform the necessary validation when reading user input for the number of pans. It ensures that users only input positive integral values for the number of pans, and sets the local state variables, emulating the concept of controlled components in React.
 						onChange={(event) => {
@@ -117,6 +125,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 						id="numberOfStoves"
 						label="Number Of Stoves"
 						type="number"
+						disabled={progress > 0 && progress < 100}
 						fullWidth
 						variant="standard"
 						sx={{ mb: 1, color: "text.secondary" }}
@@ -165,6 +174,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 							}
 							setCurrentCleaningTime(parseInt(value) || "");
 						}}
+						disabled={progress > 0 && progress < 100}
 						margin="dense"
 						id="cleaningTime"
 						label="Cleaning Time"
@@ -182,6 +192,7 @@ export const LogisticsContent = ({ success, setSuccess }) => {
 					size="large"
 					sx={{ textTransform: "none", mt: 3 }}
 					disabled={
+						(progress > 0 && progress < 100) ||
 						(numberOfPans === currentNumberOfPans &&
 							numberOfStoves === currentNumberOfStoves &&
 							cleaningTime === currentCleaningTime) ||

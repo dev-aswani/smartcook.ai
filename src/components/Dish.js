@@ -1,13 +1,15 @@
 //This component is imported by the Dish List component to model and display a dish and handle the requests related to updates and/or deletes, in conjunction with DishInput and DishList components.
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Popover from "@mui/material/Popover";
 import TableRow from "@mui/material/TableRow";
+import { dishesContext } from "../context/stateContext";
 
 export const Dish = ({ dish, index, handleEdit, handleDelete }) => {
+	const { progress } = useContext(dishesContext);
 	const [anchorEl, setAnchorEl] = useState(null);
 
 	//This handles the user's clicking on the options icon to either edit or delete a dish by displaying those options
@@ -59,6 +61,7 @@ export const Dish = ({ dish, index, handleEdit, handleDelete }) => {
 					aria-describedby={id}
 					variant="contained"
 					onClick={handleClick}
+					disabled={progress > 0 && progress < 100}
 				>
 					<MoreVertIcon
 						fontSize="inherit"
