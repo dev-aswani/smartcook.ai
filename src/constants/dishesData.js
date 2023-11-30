@@ -33,7 +33,7 @@ export const dishesData = [
 	},
 	{
 		dishName: "Pecan Pie",
-		cookingTime: 75,
+		cookingTime: 55,
 	},
 	{
 		dishName: "Red Velvet Cupcakes",
