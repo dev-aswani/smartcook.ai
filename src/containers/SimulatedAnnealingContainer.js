@@ -30,7 +30,7 @@ export const SimulatedAnnealingContainer = ({}) => {
 
 	//This function checks if the user has added necessary details pertaining to dishes and logistics
 	function validation() {
-		if (!dishes || dishes.length == 0) {
+		if (!dishes || dishes.length === 0) {
 			setRedirect("You haven't added any dishes, please add some dishes");
 		} else if (!numberOfPans && !numberOfStoves && !cleaningTime) {
 			setRedirect(

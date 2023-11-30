@@ -4,7 +4,6 @@ import { Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 export const SmartScheduleContent = ({ content }) => {
 	let newContent = content ? content.split("----------") : [];
-	console.log(newContent);
 	newContent = newContent.map((stage, index) => <p>{stage}</p>);
 
 	return (

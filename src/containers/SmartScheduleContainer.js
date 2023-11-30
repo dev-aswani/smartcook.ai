@@ -18,7 +18,7 @@ export const SmartScheduleContainer = () => {
 
 	//This function checks if the user has added necessary details pertaining to dishes and logistics, and performed simulated annealing
 	function validation() {
-		if (!dishes || dishes.length == 0) {
+		if (!dishes || dishes.length === 0) {
 			setRedirect("You haven't added any dishes, please add some dishes");
 		} else if (!numberOfPans && !numberOfStoves && !cleaningTime) {
 			setRedirect(
@@ -258,7 +258,7 @@ export const SmartScheduleContainer = () => {
 						firstPossibleCleaningTimeDuration <
 						secondPossibleCleaningTimeDuration
 					) {
-						if (numberToWash == 1) {
+						if (numberToWash === 1) {
 							await new Promise((resolve) => {
 								setLogContent((prevLogContent) => {
 									let newLogContent = prevLogContent;
@@ -286,7 +286,7 @@ export const SmartScheduleContainer = () => {
 							});
 						}
 					} else {
-						if (numberToWash == 1) {
+						if (numberToWash === 1) {
 							await new Promise((resolve) => {
 								setLogContent((prevLogContent) => {
 									let newLogContent = prevLogContent;
